@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Big Trekker</string>
+    <string name="action_settings">Settings</string>
+    <string name="message">Message</string>
+</resources>
