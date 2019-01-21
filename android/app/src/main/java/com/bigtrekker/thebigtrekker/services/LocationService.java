@@ -17,7 +17,7 @@ public class LocationService {
     public LocationService(Activity activity, PermissionService permissionService) {
         this.activity = activity;
         this.permissionService = permissionService;
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
+        this.mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
     }
 
     @SuppressLint("MissingPermission")

@@ -24,23 +24,30 @@ public class PermissionService {
      * Check to see that we have the necessary permissions for this app.
      */
     public boolean hasPermissions() {
-        return ContextCompat.checkSelfPermission(activity, SMS_PERMISSION) ==
-                PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(activity, READ_PHONE_STATE_PERMISSION) ==
-                PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(activity, LOCATION_PERMISSION) ==
-                PackageManager.PERMISSION_GRANTED;
+        return isGranted(SMS_PERMISSION)
+                && isGranted(READ_PHONE_STATE_PERMISSION)
+                && isGranted(LOCATION_PERMISSION);
     }
 
     public void requestPermissions() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, SMS_PERMISSION)
-                || ActivityCompat.shouldShowRequestPermissionRationale(activity, READ_PHONE_STATE_PERMISSION)
-                || ActivityCompat.shouldShowRequestPermissionRationale(activity, LOCATION_PERMISSION)) {
+        if (shouldRequestPermission(SMS_PERMISSION)
+            || shouldRequestPermission(READ_PHONE_STATE_PERMISSION)
+            || shouldRequestPermission(LOCATION_PERMISSION)) {
             showRequestPermissionRationale();
         } else {
-            ActivityCompat.requestPermissions(activity, new String[]{SMS_PERMISSION, READ_PHONE_STATE_PERMISSION, LOCATION_PERMISSION},
-                    PERMISSION_CODE);
+            ActivityCompat.requestPermissions(activity, new String[]{
+                    SMS_PERMISSION, READ_PHONE_STATE_PERMISSION, LOCATION_PERMISSION
+            }, PERMISSION_CODE);
         }
+    }
+
+    private boolean isGranted(String permission) {
+        return (ContextCompat.checkSelfPermission(activity, permission)
+                == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private boolean shouldRequestPermission(String permission) {
+        return ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);
     }
 
     /**
@@ -49,15 +56,15 @@ public class PermissionService {
      */
     private void showRequestPermissionRationale() {
         final AlertDialog dialog = new AlertDialog.Builder(activity.getApplicationContext())
-                .setMessage("This feature requires sms sending permission")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ActivityCompat.requestPermissions(activity,
-                                new String[]{SMS_PERMISSION, READ_PHONE_STATE_PERMISSION, LOCATION_PERMISSION}, PERMISSION_CODE);
-                    }
-                })
-                .create();
+        .setMessage("This feature requires sms sending permission")
+        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{SMS_PERMISSION, READ_PHONE_STATE_PERMISSION, LOCATION_PERMISSION}, PERMISSION_CODE);
+            }
+        })
+        .create();
         dialog.show();
     }
 }

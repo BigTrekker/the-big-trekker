@@ -26,14 +26,18 @@ public class MainActivity extends AppCompatActivity {
 
     private SmsManager mSmsManager;
 
-    private EditText mMessageInput;
+    private EditText phoneNumberInput;
+    private EditText messageInput;
 
-    private EditText mLatitudeInput;
-    private EditText mLongitudeInput;
+    private EditText latitudeInput;
+    private EditText longitudeInput;
     private void updateLatLong(double latitude, double longitude) {
-        mLatitudeInput.setText(String.format("%.4f", latitude));
-        mLongitudeInput.setText(String.format("%.4f", longitude));
+        latitudeInput.setText(String.format("%.4f", latitude));
+        longitudeInput.setText(String.format("%.4f", longitude));
     }
+
+    private FloatingActionButton refreshLocationButton;
+    private FloatingActionButton sendButton;
 
     private String getSMSContent(String latitude, String longitude, String message) {
         String toSend = "";
@@ -56,10 +60,13 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(R.drawable.ic_action_name);
         setSupportActionBar(toolbar);
 
-        mMessageInput = findViewById(R.id.message);
+        phoneNumberInput =      findViewById(R.id.phone_number);
+        messageInput =          findViewById(R.id.message);
+        latitudeInput =         findViewById(R.id.latitude);
+        longitudeInput =        findViewById(R.id.longitude);
 
-        mLatitudeInput = findViewById(R.id.latitude);
-        mLongitudeInput = findViewById(R.id.longitude);
+        refreshLocationButton = findViewById(R.id.refresh_location);
+        sendButton =            findViewById(R.id.fab);
 
         if (!mPermissionService.hasPermissions()) {
             mPermissionService.requestPermissions();
@@ -71,35 +78,35 @@ public class MainActivity extends AppCompatActivity {
     private void setUpListeners() {
         mSmsManager = SmsManager.getDefault();
 
-        FloatingActionButton fabSend = findViewById(R.id.fab);
-        fabSend.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Message sent", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) { /* DO NOTHING */ }
-                        })
-                        .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                            @Override
-                            public void onDismissed(Snackbar transientBottomBar, int event) {
-                                super.onDismissed(transientBottomBar, event);
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) { /* DO NOTHING */ }
+                })
+                .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        super.onDismissed(transientBottomBar, event);
 
-                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                                    String toSend = getSMSContent(
-                                        mLatitudeInput.getText().toString(),
-                                        mLongitudeInput.getText().toString(),
-                                        mMessageInput.getText().toString().replaceAll(" - ", " ")
-                                    );
-                                    Toast.makeText(MainActivity.this, toSend, Toast.LENGTH_LONG).show();
-                                    mSmsManager.sendTextMessage("YOUR_PHONE_NUMBER", null, toSend, null, null);
-                                }
-                            }
-                        }).show();
+                        if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                            String toSend = getSMSContent(
+                                latitudeInput.getText().toString(),
+                                longitudeInput.getText().toString(),
+                                messageInput.getText().toString().replaceAll(" - ", " ")
+                            );
+                            Toast.makeText(MainActivity.this, toSend, Toast.LENGTH_LONG).show();
+                            mSmsManager.sendTextMessage(
+                                phoneNumberInput.getText().toString(),
+                                null, toSend, null, null);
+                        }
+                    }
+                }).show();
             }
         });
-        FloatingActionButton fabRefreshLocation = findViewById(R.id.refresh_location);
-        fabRefreshLocation.setOnClickListener(new View.OnClickListener() {
+        refreshLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mLocationService.getLocation(new OnSuccessListener<Location>() {
@@ -118,13 +125,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,  int[] grantResults) {
         if (mPermissionService.hasPermissions()) {
             setUpListeners();
         } else {
-            Toast.makeText(this, "This feature requires camera and storage permission",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                this,
+                "This feature requires sms and phone and location permissions",
+                Toast.LENGTH_LONG
+            ).show();
         }
     }
 }
