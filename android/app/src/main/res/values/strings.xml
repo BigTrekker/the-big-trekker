@@ -5,4 +5,5 @@
     <string name="phone_number">Twilio number</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="sms_content_empty">SMS content</string>
 </resources>

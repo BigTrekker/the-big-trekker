@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,16 +37,29 @@ public class MainActivity extends AppCompatActivity {
         longitudeInput.setText(String.format("%.4f", longitude));
     }
 
+    private TextView smsContent;
+
     private FloatingActionButton refreshLocationButton;
+    private FloatingActionButton refreshSmsContent;
     private FloatingActionButton sendButton;
 
     private String getSMSContent(String latitude, String longitude, String message) {
         String toSend = "";
         toSend += latitude + "," + longitude;
-        toSend += " - sunny";
-        toSend += " - eat";
-        toSend += " - " + message;
+        toSend += " - sunny"; // TODO: remove when sms handler has been changed
+        toSend += " - eat"; // TODO: remove when sms handler has been changed
+        toSend += " - " + message.replaceAll(" - ", " ");
         return toSend;
+    }
+
+    private void updateSmsContent() {
+        String content = getSMSContent(
+                latitudeInput.getText().toString(),
+                longitudeInput.getText().toString(),
+                messageInput.getText().toString()
+        );
+
+        smsContent.setText(content);
     }
 
     @Override
@@ -65,7 +79,10 @@ public class MainActivity extends AppCompatActivity {
         latitudeInput =         findViewById(R.id.latitude);
         longitudeInput =        findViewById(R.id.longitude);
 
+        smsContent =            findViewById(R.id.sms_content);
+
         refreshLocationButton = findViewById(R.id.refresh_location);
+        refreshSmsContent =     findViewById(R.id.refresh_sms_content);
         sendButton =            findViewById(R.id.fab);
 
         if (!mPermissionService.hasPermissions()) {
@@ -95,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                             String toSend = getSMSContent(
                                 latitudeInput.getText().toString(),
                                 longitudeInput.getText().toString(),
-                                messageInput.getText().toString().replaceAll(" - ", " ")
+                                messageInput.getText().toString()
                             );
                             Toast.makeText(MainActivity.this, toSend, Toast.LENGTH_LONG).show();
                             mSmsManager.sendTextMessage(
@@ -120,6 +137,12 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+            }
+        });
+        refreshSmsContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateSmsContent();
             }
         });
     }
