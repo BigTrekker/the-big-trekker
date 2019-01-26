@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.bigtrekker.thebigtrekker.services.LocationService;
 import com.bigtrekker.thebigtrekker.services.PermissionService;
+import com.bigtrekker.thebigtrekker.services.PreferencesService;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private PermissionService mPermissionService;
     private LocationService mLocationService;
+    private PreferencesService mPreferencesService;
 
     private SmsManager mSmsManager;
 
@@ -69,12 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
         mPermissionService = new PermissionService(this);
         mLocationService = new LocationService(this, mPermissionService);
+        mPreferencesService = new PreferencesService(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setLogo(R.drawable.ic_action_name);
         setSupportActionBar(toolbar);
 
         phoneNumberInput =      findViewById(R.id.phone_number);
+        phoneNumberInput.setText(mPreferencesService.getString(PreferencesService.PREF_TWILIO_NUMBER));
         messageInput =          findViewById(R.id.message);
         latitudeInput =         findViewById(R.id.latitude);
         longitudeInput =        findViewById(R.id.longitude);
@@ -114,10 +118,18 @@ public class MainActivity extends AppCompatActivity {
                                 longitudeInput.getText().toString(),
                                 messageInput.getText().toString()
                             );
+
                             Toast.makeText(MainActivity.this, toSend, Toast.LENGTH_LONG).show();
+
                             mSmsManager.sendTextMessage(
                                 phoneNumberInput.getText().toString(),
-                                null, toSend, null, null);
+                                null, toSend, null, null
+                            );
+
+                            mPreferencesService.setString(
+                                    PreferencesService.PREF_TWILIO_NUMBER,
+                                    phoneNumberInput.getText().toString()
+                            );
                         }
                     }
                 }).show();
