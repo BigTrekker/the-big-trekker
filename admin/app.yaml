@@ -1,0 +1,26 @@
+runtime: python37
+service: default
+
+default_expiration: "10m"
+
+handlers:
+- url: /dist
+  static_dir: /dist
+
+- url: /.*
+  script: auto
+
+skip_files:
+- node_modules/
+- .git/
+- .gitignore
+- README
+- requirements.txt
+- requirements-dev.txt
+- .jshint
+- gulpfile.js
+- package.json
+- gitlab-ci.yaml
+- venv/
+- libs/setuptools
+- src/
