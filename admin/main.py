@@ -6,6 +6,11 @@ from flask import Flask, send_from_directory
 app = Flask(__name__)
 
 
+@app.route('/')
+def send_static_index():
+    return send_from_directory('dist/admin', 'index.html')
+
+
 @app.route('/<path:path>')
 def send_static_resource(path):
     return send_from_directory('dist/admin', path)

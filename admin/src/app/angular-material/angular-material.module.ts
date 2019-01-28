@@ -5,21 +5,36 @@ MatButtonModule,
 MatCheckboxModule ,
 MatIconModule,
 MatTooltipModule,
-MatToolbarModule
+MatToolbarModule,
+MatInputModule,
+MatDatepickerModule,
+MatFormFieldModule,
+DateAdapter,
 } from '@angular/material';
+import {
+MatMomentDateModule,
+MomentDateAdapter
+} from '@angular/material-moment-adapter';
 
 const materialModules = [
   MatButtonModule,
   MatCheckboxModule,
   MatIconModule,
   MatTooltipModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatMomentDateModule
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     ...materialModules
+  ],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter}
   ],
   exports: materialModules,
   declarations: []
