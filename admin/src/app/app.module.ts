@@ -11,6 +11,8 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { NavbarComponent } from './navbar/navbar.component';
 import { PostEditorComponent } from './post-editor/post-editor.component';
 
+import { AgmCoreModule } from '@agm/core';
+
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -24,7 +26,10 @@ registerLocaleData(localeFr);
     BrowserAnimationsModule,
     AngularMaterialModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAx8oJ1MwmuHJ4JGKVwVV5O4e91062IYRY'
+    })
   ],
   providers: [ { provide: LOCALE_ID, useValue: 'fr' } ],
   bootstrap: [AppComponent]
