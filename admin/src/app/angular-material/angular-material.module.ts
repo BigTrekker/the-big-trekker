@@ -15,6 +15,8 @@ import {
 MatMomentDateModule,
 MomentDateAdapter
 } from '@angular/material-moment-adapter';
+import { MatFileUploadModule } from 'angular-material-fileupload';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 const materialModules = [
   MatButtonModule,
@@ -25,7 +27,9 @@ const materialModules = [
   MatFormFieldModule,
   MatInputModule,
   MatDatepickerModule,
-  MatMomentDateModule
+  MatMomentDateModule,
+  MatFileUploadModule,
+  TextFieldModule
 ];
 
 @NgModule({
