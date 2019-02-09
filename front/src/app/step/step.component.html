@@ -1,0 +1,11 @@
+<div class="step-item">
+  <div class="header">
+    <div class="date">{{ step.date }}</div>
+    <!--<div class="icons">
+        <img ng-src="{{ panelCtrl.getWeatherIconUrl(item) }}" lx-tooltip="{{ panelCtrl.getWeatherTooltip(item) }}" class="bgc-indigo-500">
+    </div>-->
+  </div>
+  <div class="message">
+    {{ step.message | slice:0:85 }}{{ step.message.length > 85 ? '...' : '' }}
+  </div>
+<div>

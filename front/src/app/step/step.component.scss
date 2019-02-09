@@ -1,0 +1,48 @@
+.step-item:hover,
+.step-item.selected,
+.mobile-nav-item:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+.step-item .header {
+    position: relative;
+    height: 30px;
+}
+
+.step-item .date {
+    display: inline-block;
+    padding-top: 6px;
+    font-weight: lighter;
+}
+
+.step-item .icons {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    height: 100%;
+}
+
+.step-item .icons img {
+    display: inline-block;
+    height: 100%;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.4);
+}
+
+.step-item .message {
+    margin-top: 10px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.2);
+    text-align: justify;
+}
+
+/* doesn't work... to be checked again because even when putting it in step-list.component.scss with following, it doesn't work:
+.mat-list-item:last-child .mat-list-item-content step .step-item .message {
+    border: none;
+}*/
+/*.step-item:last-child .message {
+    border: none;
+}*/
