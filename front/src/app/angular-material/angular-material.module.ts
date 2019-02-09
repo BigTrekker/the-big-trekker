@@ -1,10 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule ,
+  MatIconModule,
+  MatTooltipModule,
+  MatToolbarModule,
+  MatListModule,
+} from '@angular/material';
 
 const materialModules = [
   MatButtonModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatIconModule,
+  MatTooltipModule,
+  MatToolbarModule,
+  MatListModule,
 ];
 
 @NgModule({

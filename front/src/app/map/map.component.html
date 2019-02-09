@@ -1,0 +1,7 @@
+<agm-map #AgmMap
+           [latitude]="center.lat"
+           [longitude]="center.lng"
+           [zoom]="zoom"
+  >
+    <agm-marker *ngFor="let step of steps" [latitude]="step.latitude" [longitude]="step.longitude"></agm-marker>
+</agm-map>
