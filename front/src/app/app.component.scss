@@ -1,33 +1,26 @@
-header {
-    margin-top: -8px;
-    margin-right: -8px;
-    margin-left: -8px;
-}
-
 step-list, map {
     top: 56px;
     bottom: 0;
 }
 
 step-list {
-    background-color: darksalmon;
-
+    z-index: 2;
     position: absolute;
     left: 0;
+    overflow-y: scroll;
+    -webkit-box-shadow: 2px 0 10px -2px #888;
+    box-shadow: 2px 0 10px -2px #888;
 }
 
 map {
+    z-index: 1;
     background-color: lightblue;
-
     position: absolute;
     right: 0;
     width: 100%;
 }
 
-@media screen and (min-width: 599px) and (max-width: 1023px) {
-    step-list, map {
-        top: 64px;
-    }
+@media screen and (min-width: 599px) {
 
     step-list {
         width: 260px;
