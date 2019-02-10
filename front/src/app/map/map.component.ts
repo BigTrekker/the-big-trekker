@@ -1,14 +1,28 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Step } from '../step/step';
+import { MapService } from './map.service';
+
+import { Data }from '@agm/core';
 
 @Component({
   selector: 'map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent {
+export class MapComponent implements OnInit {
 
   @Input() steps: Array<Step> = [];
+
+  geojson;
+  geojsonStyle = {
+    // set fill color for polygon features
+    fillColor: "red",
+    // stroke color for polygons
+    strokeColor: "black",
+    strokeWeight: 2,
+    // make layer 1 features visible
+    visible: true
+  };
 
   center: Object = {
     lat: 45.759148,
@@ -17,5 +31,9 @@ export class MapComponent {
   zoom: Number = 10;
   marker: Object = null;
 
-  constructor() { }
+  constructor(private mapService: MapService) { }
+
+  ngOnInit() {
+    this.geojson = this.mapService.getLine(this.steps);
+  }
 }

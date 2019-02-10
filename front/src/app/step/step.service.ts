@@ -28,7 +28,7 @@ export class StepService {
         authorName: "Tom Jones",
         date: new Date(2019, 0, 8),
         message: "Hello, this is a sample third comment",
-    },
+    }/*,
     {
         latitude: 45.7503391,
         longitude: 4.8654167,
@@ -742,7 +742,7 @@ export class StepService {
         authorName: "Tom Jones",
         date: new Date(2019, 0, 8),
         message: "Hello, this is a sample third comment",
-    },
+    },*/
   ];
 
   getSteps(): Observable<Step[]> {
@@ -754,6 +754,6 @@ export class StepService {
   }
 
   setSelectedStep(index: number) {
-    
+
   }
 }
