@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Step, TEST_STEPS } from '../step/step';
+import { Step } from '../step/step';
 
 @Component({
   selector: 'map',
@@ -8,7 +8,7 @@ import { Step, TEST_STEPS } from '../step/step';
 })
 export class MapComponent {
 
-  @Input() steps: Array<Step> = TEST_STEPS;
+  @Input() steps: Array<Step> = [];
 
   center: Object = {
     lat: 45.759148,

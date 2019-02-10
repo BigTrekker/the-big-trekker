@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Step, TEST_STEPS } from '../step/step';
+import { Step } from '../step/step';
 
 @Component({
   selector: 'step-list',
@@ -8,8 +8,5 @@ import { Step, TEST_STEPS } from '../step/step';
 })
 export class StepListComponent {
 
-  @Input() steps: Array<Step> = TEST_STEPS;
-
-  constructor() { }
-
+  @Input() steps: Array<Step> = [];
 }

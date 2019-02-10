@@ -1,42 +1,43 @@
-.step-item:hover,
-.step-item.selected,
-.mobile-nav-item:hover {
-    background-color: white;
-    cursor: pointer;
-}
+$header-height: 30px;
 
 .step-item .header {
     position: relative;
-    height: 30px;
+    height: $header-height;
+    padding-top: 12px;
 }
 
 .step-item .date {
     display: inline-block;
-    padding-top: 6px;
     font-weight: lighter;
-}
-
-.step-item .icons {
-    display: inline-block;
-    position: absolute;
-    right: 0;
-    height: 100%;
-}
-
-.step-item .icons img {
-    display: inline-block;
-    height: 100%;
-    padding: 5px;
-    margin-left: 10px;
-    border-radius: 15px;
-    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.4);
+    line-height: $header-height;
 }
 
 .step-item .message {
-    margin-top: 10px;
+    margin-top: 8px;
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(150, 150, 150, 0.2);
     text-align: justify;
+}
+
+.step-item .step-icons {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    height: $header-height;
+}
+
+.step-item .step-icon {
+    display: inline-block;
+    height: $header-height;
+    line-height: $header-height;
+    width: $header-height;
+    margin-left: 10px;
+    color: white;
+    border-radius: 15px;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.4);
+            box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.4);
 }
 
 /* doesn't work... to be checked again because even when putting it in step-list.component.scss with following, it doesn't work:
