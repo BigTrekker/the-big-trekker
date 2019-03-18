@@ -8,6 +8,7 @@ logs:
 	$(COMPOSE) logs --follow --tail 20 $(SERVICE)
 
 bootstrap:
+	rm -rf venv
 	virtualenv -p $(PYTHON) venv
 	source venv/bin/activate
 	pip3 install -r requirements.txt
