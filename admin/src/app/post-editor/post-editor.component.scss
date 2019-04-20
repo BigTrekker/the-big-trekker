@@ -9,6 +9,47 @@ form > * {
   margin: 10px auto;
 }
 
+.sub-form-element {
+  margin: 10px auto;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 agm-map {
   height: 300px;
 }
+
+#photos-preview-panel {
+  height: 150px;
+  overflow-y: hidden;
+
+  & > div {
+    width: max-content;
+
+    .photo-container {
+      height: 150px;
+      display: inline-flex;
+      margin: auto 5px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .photo-thumbnail {
+        height: 100%;
+        background-size: contain;
+      }
+    }
+  }
+}
+

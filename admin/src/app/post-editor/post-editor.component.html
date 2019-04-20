@@ -1,58 +1,64 @@
-<form [formGroup]="postForm">
-  <h1>Racontez-nous !</h1>
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+  <h1>Raconte-nous !</h1>
 
   <mat-form-field>
     <mat-label>C'était bien ?</mat-label>
-    <textarea matInput cdkTextareaAutosize formControlName="content"></textarea>
+    <textarea matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="3"
+              cdkAutosizeMinRows="10" formControlName="content"></textarea>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>C'était quand ?</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="date">
+    <input matInput [matDatepicker]="picker" formControlName="date" required>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <div>
-    <label for="singleFile">Upload file</label>
-    <input id="singleFile" type="file" [fileUploadInputFor]= "fileUploadQueue"/>
-    <br>
+  <div id="photos-panel">
 
-    <mat-file-upload-queue #fileUploadQueue
-        [fileAlias]="'file'"
-        [httpUrl]="'http://localhost:8180/jax-rs-jersey-application-sample'">
+    <button mat-raised-button (click)="photosInput.click();$event.preventDefault()" class="sub-form-element">
+      <mat-icon>photo_camera</mat-icon>
+        Ajoute des photos !
+    </button>
 
-        <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
-    </mat-file-upload-queue>
+    <input
+      style="display: none" multiple
+      type="file" (change)="onFileChanged($event)"
+      #photosInput>
 
-    <div [fileUploadInputFor]="fileUploadQueue" class="upload-drop-zone">
-        Just drag and drop files here
+    <div id="photos-preview-panel" class="sub-form-element"
+         *ngIf="postForm.controls['photos'].value && postForm.controls['photos'].value.length > 0">
+      <div>
+        <div *ngFor="let photo of postForm.controls['photos'].value" class="photo-container">
+          <img class="photo-thumbnail" [src]="photo.fileAsDataUrl" />
+        </div>
+      </div>
     </div>
   </div>
 
-  <div style="width: 500px">
-    <mat-file-upload-queue #fileUploadQueue
-                           [fileAlias]="'file'"
-            [httpUrl]="'http://localhost:8180/jax-rs-jersey-application-sample'" multiple>
-
-            <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
-        </mat-file-upload-queue>
-    </div>
-
   <div>
-    <div id="locate-me">
-      <button mat-button (click)="locateUser()">
+    <div id="locate-me" class="sub-form-element">
+      <button mat-raised-button (click)="locateUser();$event.preventDefault()">
         <mat-icon>gps_not_fixed</mat-icon>
-        Localise moi !
+        Localise toi !
       </button>
     </div>
-  <agm-map #AgmMap
+  <agm-map #AgmMap class="sub-form-element"
            (mapClick)="mapClicked($event)"
-           [latitude]="center.lat"
-           [longitude]="center.lng"
-           [zoom]="zoom"
+           [latitude]="mapParams.center.lat"
+           [longitude]="mapParams.center.lng"
+           [zoom]="mapParams.zoom"
   >
-    <agm-marker *ngIf="marker !== null" [latitude]="marker.lat" [longitude]="marker.lng"></agm-marker>
+    <agm-marker *ngIf="postForm.controls['position'].value !== null"
+                [latitude]="postForm.controls['position'].value.lat"
+                [longitude]="postForm.controls['position'].value.lng"></agm-marker>
   </agm-map>
   </div>
+
+  <button type="submit" mat-raised-button color="primary" [disabled]="!postForm.valid">
+    <mat-icon>send</mat-icon>
+      Poster !
+  </button>
 </form>
