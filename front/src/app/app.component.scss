@@ -1,0 +1,46 @@
+step-list, map {
+    top: 56px;
+    bottom: 0;
+}
+
+step-list {
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    overflow-y: scroll;
+    -webkit-box-shadow: 2px 0 10px -2px #888;
+    box-shadow: 2px 0 10px -2px #888;
+}
+
+map {
+    z-index: 1;
+    background-color: lightblue;
+    position: absolute;
+    right: 0;
+    width: 100%;
+}
+
+@media screen and (min-width: 599px) {
+
+    step-list {
+        width: 260px;
+    }
+
+    map {
+        width: calc(100% - 260px);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    step-list, map {
+        top: 64px;
+    }
+
+    step-list {
+        width: 340px;
+    }
+
+    map {
+        width: calc(100% - 340px);
+    }
+}

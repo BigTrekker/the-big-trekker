@@ -1,0 +1,49 @@
+$header-height: 30px;
+
+.step-item .header {
+    position: relative;
+    height: $header-height;
+    padding-top: 12px;
+}
+
+.step-item .date {
+    display: inline-block;
+    font-weight: lighter;
+    line-height: $header-height;
+}
+
+.step-item .message {
+    margin-top: 8px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.2);
+    text-align: justify;
+}
+
+.step-item .step-icons {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    height: $header-height;
+}
+
+.step-item .step-icon {
+    display: inline-block;
+    height: $header-height;
+    line-height: $header-height;
+    width: $header-height;
+    margin-left: 10px;
+    color: white;
+    border-radius: 15px;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.4);
+            box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.4);
+}
+
+/* doesn't work... to be checked again because even when putting it in step-list.component.scss with following, it doesn't work:
+.mat-list-item:last-child .mat-list-item-content step .step-item .message {
+    border: none;
+}*/
+/*.step-item:last-child .message {
+    border: none;
+}*/

@@ -1,0 +1,14 @@
+.mat-list-item {
+    height: auto!important;
+
+    step {
+        //background-color: yellow;
+        width: 100%;
+    }
+}
+
+.mat-list-item:hover,
+.mat-list-item.selected {
+    background-color: white;
+    cursor: pointer;
+}

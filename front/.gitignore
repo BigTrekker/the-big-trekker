@@ -1,5 +1,4 @@
-# backend
-venv/
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
 /dist
@@ -8,6 +7,10 @@ venv/
 
 # dependencies
 /node_modules
+
+# profiling files
+chrome-profiler-events.json
+speed-measure-plugin.json
 
 # IDEs and editors
 /.idea
@@ -24,6 +27,7 @@ venv/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.history/*
 
 # misc
 /.sass-cache
