@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "./dist/big-trekker",
+    "predeploy": "ng build --prod",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
