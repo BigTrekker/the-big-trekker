@@ -1,0 +1,8 @@
+<div *ngIf="user; else notLoggedIn">
+  <!-- <img src="{{ user.photoURL }}" alt=""> -->
+  <span >{{ user.displayName }}</span>
+  <a (click)="logout()">Log out</a>
+</div>
+<ng-template #notLoggedIn>
+  <span routerLink="login">Sign in</span>
+</ng-template>
