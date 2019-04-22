@@ -2,6 +2,8 @@ SHELL := /bin/bash
 
 COMPOSE = docker-compose -p "big-trekker"
 PYTHON  = $(shell which python3)
+PWD = $(shell pwd)
+SERVICE_ACCOUND = $(PWD)/config/service-account.json
 
 logs: SERVICE=
 logs:
@@ -14,9 +16,10 @@ bootstrap:
 	$(COMPOSE) pull
 
 start:
+	
 	$(COMPOSE) up -d
 	source venv/bin/activate
-	python3 main.py
+	GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUND) $(PYTHON) main.py
 
 stop:
 	$(COMPOSE) down
