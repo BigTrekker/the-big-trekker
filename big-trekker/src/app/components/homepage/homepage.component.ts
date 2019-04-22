@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenService } from 'src/app/auth';
 
 @Component({
   selector: 'app-homepage',
@@ -7,8 +6,7 @@ import { TokenService } from 'src/app/auth';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-
-  constructor(protected token: TokenService) { }
+  constructor() { }
 
   ngOnInit() {
   }

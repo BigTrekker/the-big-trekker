@@ -1,6 +1,5 @@
-from flask import Flask
+from flask import Flask, request, abort, g, jsonify
 from flask_cors import CORS
-
 from firebase_admin import auth, initialize_app
 
 app = Flask(__name__)
@@ -8,19 +7,45 @@ CORS(app)
 
 initialize_app()
 
-uid = 'OYdg9yprjohsRKu0B8Wj9xmXCrr2'
-token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjVmYjMyOWRmNjdiYjY4NDVkNDk1NDNiMGM0OWIzNWM4ODg1NzllYmEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiSsOpcsOpbWkgTGUgQm91cmhpcyIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLXF1ZkhjbExGd3NRL0FBQUFBQUFBQUFJL0FBQUFBQUFBQWprLy12OGNGbzhkZldzL3Bob3RvLmpwZyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9iaWctdHJla2tlciIsImF1ZCI6ImJpZy10cmVra2VyIiwiYXV0aF90aW1lIjoxNTU1OTMzODQ2LCJ1c2VyX2lkIjoiT1lkZzl5cHJqb2hzUkt1MEI4V2o5eG1YQ3JyMiIsInN1YiI6Ik9ZZGc5eXByam9oc1JLdTBCOFdqOXhtWENycjIiLCJpYXQiOjE1NTU5MzM4NDcsImV4cCI6MTU1NTkzNzQ0NywiZW1haWwiOiJqZXJlbWkubGViQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTA1NzExMTEwMDYyMzU1NDI1NjMzIl0sImVtYWlsIjpbImplcmVtaS5sZWJAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.mBvjyyyqfkSe2D8siTADjbufexnWUqILlhwgemdhrX9a5beFgKQ7WeciBWnZNU5JHAd9z_VLz8eoZvcDlMj7ekRDiT8-WpkswzSvIPQ4wdgAzthxXzBRJquHvshJg_loa_3e1RJwpVbBsBCkhuXiMM-2frXr3oYfbp8KRhXAQG8M5H2u9D7o7bkPKK5qX8L55BzqpxHGmxChNiZMHwdoDkbeY-Vgq9dlXaOgN-MQHSR0LwX1f-R9InNKlXG-txg-M4JIE35h290njbEGoAPOqQ2KjE-R6x_UVskZTd-P52f2E1SiiusPoHwbspbyfUVv6xrMJhMVEUyQr4H-_dbYPw'
+ERRORS_401 = {
+    'NO_TOKEN': "You are not authorized to access",
+    'TOKEN_EXPIRED': "Your token expired, you must send a valid token",
+    'NOT_ENOUGHT_RIGHTS': "You don't have the right to acces to this resource"
+}
 
-print(auth.get_user(uid).uid)
+@app.errorhandler(401)
+def unauthorized(errors):
+    message = ERRORS_401[errors] if errors in ERRORS_401 else ERRORS_401['NO_TOKEN']
+    response = jsonify({ 'code': 401, 'message': message })
+    response.status_code = 401
+    return response
 
-decoded_token = auth.verify_id_token(token)
-uid = decoded_token['uid']
-print(uid)
+@app.before_request
+def before_request():
+    methods = ['GET', 'POST', 'PUT', 'DELETE']
 
+    if request.method not in methods:
+        return
+
+    authorization_header = request.headers.get('Authorization') if request.headers.get('Authorization') is not None else ''
+    header_value = authorization_header.split(' ')
+
+    if len(header_value) != 2:
+        abort(401, 'NO_TOKEN')
+        return
+
+    if header_value[0] != 'Bearer' or header_value[1] == '':
+        abort(401, 'NO_TOKEN')
+        return
+
+    try :
+        g.user = auth.verify_id_token(header_value[1])
+    except ValueError:
+        abort(401, 'TOKEN_EXPIRED')
 
 @app.route('/test')
 def hello():
-    """Return a friendly HTTP greeting."""
+    print(g.user)
     return 'Hello World!'
 
 
