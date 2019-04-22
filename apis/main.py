@@ -1,9 +1,24 @@
 from flask import Flask
+from flask_cors import CORS
+
+from firebase_admin import auth, initialize_app
 
 app = Flask(__name__)
+CORS(app)
+
+initialize_app()
+
+uid = 'OYdg9yprjohsRKu0B8Wj9xmXCrr2'
+token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjVmYjMyOWRmNjdiYjY4NDVkNDk1NDNiMGM0OWIzNWM4ODg1NzllYmEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiSsOpcsOpbWkgTGUgQm91cmhpcyIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLXF1ZkhjbExGd3NRL0FBQUFBQUFBQUFJL0FBQUFBQUFBQWprLy12OGNGbzhkZldzL3Bob3RvLmpwZyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9iaWctdHJla2tlciIsImF1ZCI6ImJpZy10cmVra2VyIiwiYXV0aF90aW1lIjoxNTU1OTMzODQ2LCJ1c2VyX2lkIjoiT1lkZzl5cHJqb2hzUkt1MEI4V2o5eG1YQ3JyMiIsInN1YiI6Ik9ZZGc5eXByam9oc1JLdTBCOFdqOXhtWENycjIiLCJpYXQiOjE1NTU5MzM4NDcsImV4cCI6MTU1NTkzNzQ0NywiZW1haWwiOiJqZXJlbWkubGViQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTA1NzExMTEwMDYyMzU1NDI1NjMzIl0sImVtYWlsIjpbImplcmVtaS5sZWJAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.mBvjyyyqfkSe2D8siTADjbufexnWUqILlhwgemdhrX9a5beFgKQ7WeciBWnZNU5JHAd9z_VLz8eoZvcDlMj7ekRDiT8-WpkswzSvIPQ4wdgAzthxXzBRJquHvshJg_loa_3e1RJwpVbBsBCkhuXiMM-2frXr3oYfbp8KRhXAQG8M5H2u9D7o7bkPKK5qX8L55BzqpxHGmxChNiZMHwdoDkbeY-Vgq9dlXaOgN-MQHSR0LwX1f-R9InNKlXG-txg-M4JIE35h290njbEGoAPOqQ2KjE-R6x_UVskZTd-P52f2E1SiiusPoHwbspbyfUVv6xrMJhMVEUyQr4H-_dbYPw'
+
+print(auth.get_user(uid).uid)
+
+decoded_token = auth.verify_id_token(token)
+uid = decoded_token['uid']
+print(uid)
 
 
-@app.route('/')
+@app.route('/test')
 def hello():
     """Return a friendly HTTP greeting."""
     return 'Hello World!'
