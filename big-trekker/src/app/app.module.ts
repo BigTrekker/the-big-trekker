@@ -1,6 +1,6 @@
 import { ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavbarUserProfileComponent, PageNotFoundComponent, HomepageComponent, NavBarComponent } from './components';
+import { TokenInterceptor } from './interceptors';
 
 registerLocaleData(localeFr);
 
@@ -32,7 +33,10 @@ registerLocaleData(localeFr);
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [ { provide: LOCALE_ID, useValue: 'fr' } ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'fr' },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
