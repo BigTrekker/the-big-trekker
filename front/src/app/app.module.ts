@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import localeFr from '@angular/common/locales/fr';
 
+import { environment } from 'src/environments/environment';
+
 import { AngularGoogleMapsModule } from './angular-google-maps.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +36,7 @@ registerLocaleData(localeFr);
     HttpClientModule,
   ],
   providers: [
+    { provide: 'BaseUrl', useValue: environment.apiUrl },
     { provide: LOCALE_ID, useValue: 'fr' },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
