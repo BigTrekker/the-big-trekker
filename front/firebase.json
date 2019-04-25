@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "./dist/big-trekker",
+    "public": "./dist/front",
     "predeploy": "ng build --prod",
     "ignore": [
       "firebase.json",
