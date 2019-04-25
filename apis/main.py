@@ -40,13 +40,13 @@ def before_request():
 
     try :
         g.user = auth.verify_id_token(header_value[1])
-    except ValueError:
+    except ValueError as err:
+        print("{0}".format(err))
         abort(401, 'TOKEN_EXPIRED')
 
-@app.route('/test')
+@app.route('/api/hello-world')
 def hello():
-    print(g.user)
-    return 'Hello World!'
+    return 'Hello World!, uid' + g.user['uid']
 
 
 if __name__ == '__main__':

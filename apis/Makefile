@@ -3,7 +3,7 @@ SHELL := /bin/bash
 COMPOSE = docker-compose -p "big-trekker"
 PYTHON  = $(shell which python3)
 PWD = $(shell pwd)
-SERVICE_ACCOUND = $(PWD)/config/service-account.json
+SERVICE_ACCOUND = $(PWD)/secret/service-account.json
 
 logs: SERVICE=
 logs:
@@ -15,14 +15,15 @@ bootstrap:
 	pip3 install -r requirements.txt
 	$(COMPOSE) pull
 
-start:
-	
-	$(COMPOSE) up -d
+start:start-stack
 	source venv/bin/activate
-	GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUND) $(PYTHON) main.py
+	BIG_TREKKER_ENV=dev GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUND) $(PYTHON) main.py
 
 stop:
 	$(COMPOSE) down
+
+start-stack:
+	$(COMPOSE) up -d
 
 config:
 	$(COMPOSE) config
@@ -32,3 +33,6 @@ exec:
 
 ps:
 	$(COMPOSE) ps
+
+deploy: 
+	gcloud app deploy --project big-trekker
