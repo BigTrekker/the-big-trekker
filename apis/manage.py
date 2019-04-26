@@ -4,7 +4,11 @@ import unittest
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
+if os.getenv('GOOGLE_APPLICATION_CREDENTIALS') is None:
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './secret/service-account.json'
+
 from app import create_app, db
+import app.models
 
 app = create_app(os.getenv('BIG_TREKKER_ENV') or 'dev')
 

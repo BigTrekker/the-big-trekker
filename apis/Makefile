@@ -3,7 +3,7 @@ SHELL := /bin/bash
 COMPOSE = docker-compose -p "big-trekker"
 PYTHON  = $(shell which python3)
 PWD = $(shell pwd)
-SERVICE_ACCOUND = $(PWD)/secret/service-account.json
+SERVICE_ACCOUNT = $(PWD)/secret/service-account.json
 
 logs: SERVICE=
 logs:
@@ -17,19 +17,19 @@ bootstrap:
 
 start:start-stack
 	source venv/bin/activate
-	BIG_TREKKER_ENV=dev GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUND) $(PYTHON) manage.py run 
+	BIG_TREKKER_ENV=dev GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUNT) $(PYTHON) manage.py run 
 
 test:start-stack
 	source venv/bin/activate
-	BIG_TREKKER_ENV=test GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUND) $(PYTHON) manage.py test 
+	BIG_TREKKER_ENV=test GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUNT) $(PYTHON) manage.py test 
 
-stop:
+stop-stack:
 	$(COMPOSE) down
 
 start-stack:
 	$(COMPOSE) up -d
 
-config:
+stack-config:
 	$(COMPOSE) config
 
 exec:
