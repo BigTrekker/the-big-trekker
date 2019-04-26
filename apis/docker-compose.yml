@@ -5,6 +5,10 @@ services:
     image: postgres
     ports:
       - 5432:5432
+    volumes:
+      - pgdata-big-trekker:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: my-password
+volumes:
+  pgdata-big-trekker:

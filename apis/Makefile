@@ -17,7 +17,11 @@ bootstrap:
 
 start:start-stack
 	source venv/bin/activate
-	BIG_TREKKER_ENV=dev GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUND) $(PYTHON) main.py
+	BIG_TREKKER_ENV=dev GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUND) $(PYTHON) manage.py run 
+
+test:start-stack
+	source venv/bin/activate
+	BIG_TREKKER_ENV=test GOOGLE_APPLICATION_CREDENTIALS=$(SERVICE_ACCOUND) $(PYTHON) manage.py test 
 
 stop:
 	$(COMPOSE) down
