@@ -2,3 +2,4 @@ runtime: python37
 
 env_variables:
   GOOGLE_APPLICATION_CREDENTIALS: "./secret/service-account.json"
+  BIG_TREKKER_ENV: "prod"
