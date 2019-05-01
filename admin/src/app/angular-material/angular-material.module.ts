@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-MatButtonModule,
-MatCheckboxModule ,
-MatIconModule,
-MatTooltipModule,
-MatToolbarModule,
-MatInputModule,
-MatDatepickerModule,
-MatFormFieldModule,
-DateAdapter,
+  MatButtonModule,
+  MatCheckboxModule ,
+  MatIconModule,
+  MatTooltipModule,
+  MatToolbarModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  DateAdapter,
+  MatSnackBarModule
 } from '@angular/material';
 import {
-MatMomentDateModule,
-MomentDateAdapter
+  MatMomentDateModule,
+  MomentDateAdapter
 } from '@angular/material-moment-adapter';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { TextFieldModule } from '@angular/cdk/text-field';
@@ -29,7 +30,8 @@ const materialModules = [
   MatDatepickerModule,
   MatMomentDateModule,
   MatFileUploadModule,
-  TextFieldModule
+  TextFieldModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

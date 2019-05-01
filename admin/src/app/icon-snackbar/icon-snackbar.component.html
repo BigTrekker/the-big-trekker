@@ -1,0 +1,8 @@
+<span>
+    <mat-icon *ngIf="icon" [ngStyle]="{color: icon.color || defaultColor}">
+      {{ icon.name }}
+    </mat-icon>
+    <span>
+      {{ message }}
+    </span>
+</span>

@@ -4,6 +4,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PostEditorComponent } from './post-editor/post-editor.component';
 
 import { AgmCoreModule } from '@agm/core';
+import { IconSnackbarComponent } from './icon-snackbar/icon-snackbar.component';
 
 registerLocaleData(localeFr);
 
@@ -19,11 +21,13 @@ registerLocaleData(localeFr);
   declarations: [
     AppComponent,
     NavbarComponent,
-    PostEditorComponent
+    PostEditorComponent,
+    IconSnackbarComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AngularMaterialModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -32,6 +36,11 @@ registerLocaleData(localeFr);
     })
   ],
   providers: [ { provide: LOCALE_ID, useValue: 'fr' } ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ],
+  entryComponents: [
+    IconSnackbarComponent
+  ]
 })
 export class AppModule { }

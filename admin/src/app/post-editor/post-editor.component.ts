@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 import { AgmMap } from '@agm/core';
 
-import { ExifService } from './exif.service';
+import { ExifService } from './../services/exif.service';
+import { PostService } from './../services/post.service';
+import { IconSnackbarComponent } from './../icon-snackbar/icon-snackbar.component';
 
 enum DATE_AND_COORD_DEFINED_BY {
   DEFAULT = 1,
@@ -35,7 +38,9 @@ export class PostEditorComponent {
   dateDefinedBy: DATE_AND_COORD_DEFINED_BY = DATE_AND_COORD_DEFINED_BY.DEFAULT;
   coordDefinedBy: DATE_AND_COORD_DEFINED_BY = DATE_AND_COORD_DEFINED_BY.DEFAULT;
 
-  constructor(private exifService: ExifService) {}
+  constructor(private exifService: ExifService,
+    private postService: PostService,
+    private snackbar: MatSnackBar) {}
 
   updateLocationIfAuthorized(coords: Object, action: DATE_AND_COORD_DEFINED_BY) {
     if(action >= this.coordDefinedBy) {
@@ -112,6 +117,31 @@ export class PostEditorComponent {
 
   onSubmit() {
     console.log(this.postForm.value);
+    this.postService.addPost(this.postForm.value).subscribe(post => {
+      console.log("New post added !!", post);
+      this.snackbar.openFromComponent(IconSnackbarComponent, {
+        data: {
+          icon: {
+            name: "done",
+            color: "green"
+          },
+          message: "New post added !!"
+        },
+        duration: 3000
+      });
+    }, error => {
+      console.error("Error happens...", error);
+      this.snackbar.openFromComponent(IconSnackbarComponent, {
+        data: {
+          icon: {
+            name: "warning",
+            color: "orange"
+          },
+          message: error
+        },
+        duration: 3000
+      });
+    })
   }
 
 }
