@@ -7,13 +7,16 @@ app = Flask(__name__)
 
 
 @app.route('/')
+@app.route('/login')
+@app.route('/auth/login')
 def send_static_index():
     return send_from_directory('dist/admin', 'index.html')
 
 
 @app.route('/<path:path>')
-def send_static_resource(path):
+def send_static_assets(path):
     return send_from_directory('dist/admin', path)
+
 
 
 if __name__ == '__main__':

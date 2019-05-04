@@ -1,0 +1,11 @@
+<div *ngIf="user; else notLoggedIn">
+  <!-- <img src="{{ user.photoURL }}" alt=""> -->
+  <span >{{ user.displayName }}</span>
+  <button mat-icon-button matTooltip="Se déconnecter" matTooltipPosition="below" (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+  </button>
+</div>
+<ng-template #notLoggedIn>
+  <span routerLink="login">Sign in</span>
+</ng-template>
+
