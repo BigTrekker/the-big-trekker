@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { environment } from './../environments/environment'
 import { AuthGuard } from './auth/guards/auth.guard';
 import { PostEditorComponent } from './post-editor/post-editor.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -18,7 +19,7 @@ const routes: Routes = [
   {
     path: '',
     component: PostEditorComponent,
-    canLoad: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
@@ -27,7 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,  { enableTracing: !environment.production })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

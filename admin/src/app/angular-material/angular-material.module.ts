@@ -4,6 +4,7 @@ import {
   MatButtonModule,
   MatCheckboxModule ,
   MatIconModule,
+  MatIconRegistry,
   MatTooltipModule,
   MatToolbarModule,
   MatInputModule,

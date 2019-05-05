@@ -4,7 +4,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -18,6 +18,7 @@ import { PostEditorComponent } from './post-editor/post-editor.component';
 import { PostEditorFormComponent } from './post-editor/post-editor-form/post-editor-form.component';
 import { IconSnackbarComponent } from './icon-snackbar/icon-snackbar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 registerLocaleData(localeFr);
 
@@ -45,6 +46,7 @@ registerLocaleData(localeFr);
   providers: [
     { provide: LOCALE_ID, useValue: 'fr' },
     { provide: 'BaseUrl', useValue: environment.apiUrl },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
    ],
   bootstrap: [
     AppComponent

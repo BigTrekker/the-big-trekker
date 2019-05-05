@@ -2,7 +2,7 @@ import { keys } from './keys';
 
 export const environment = {
   ...keys,
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'http://localhost:4200',
   production: false
 };
 
