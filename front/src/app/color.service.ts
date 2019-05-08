@@ -40,8 +40,9 @@ export class ColorService {
 
   private getRandomColor(): string {
     let idx = Math.round(Math.random() * (this.possibleColors.length - 1));
-    console.log(idx);
-    return this.possibleColors[idx];
+    let color = this.possibleColors[idx];
+    delete this.possibleColors[idx]
+    return color;
   }
 
   getRandomUniqueColor(value: string): string {
