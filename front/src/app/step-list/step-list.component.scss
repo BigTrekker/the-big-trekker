@@ -2,7 +2,6 @@
     height: auto!important;
 
     step {
-        //background-color: yellow;
         width: 100%;
     }
 }
@@ -11,4 +10,8 @@
 .mat-list-item.selected {
     background-color: white;
     cursor: pointer;
+}
+
+.mat-list-item.current {
+    background-color: rgba(103, 58, 183, 0.3);
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Step } from '../step/step';
 import { MapService } from './map.service';
+import { StepService } from '../step/step.service';
 
 @Component({
   selector: 'map',
@@ -10,6 +11,7 @@ import { MapService } from './map.service';
 export class MapComponent implements OnInit {
 
   @Input() steps: Array<Step> = [];
+  hoveringStep = null;
 
   geojson;
   geojsonStyle = {
@@ -29,9 +31,21 @@ export class MapComponent implements OnInit {
   zoom: Number = 10;
   marker: Object = null;
 
-  constructor(private mapService: MapService) { }
+  constructor(private mapService: MapService, private stepService: StepService) { }
 
   ngOnInit() {
     this.geojson = this.mapService.getLine(this.steps);
+    this.stepService.getHoveringStep().subscribe(hoveringStep => this.hoveringStep = hoveringStep);
+  }
+
+  onMouseOverMarker(index: number) {
+    this.stepService.setHoveringStep(index);
+  }
+  onMouseOutMarker() {
+    this.stepService.setHoveringStep(null);
+  }
+
+  onMarkerClicked(index: number) {
+    this.stepService.setSelectedStep(index);
   }
 }

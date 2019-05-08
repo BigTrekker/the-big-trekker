@@ -1,5 +1,9 @@
 <mat-list role="list">
-  <mat-list-item role="listitem" *ngFor="let step of steps; let index = index;">
-    <step [step]="step" [index]="steps.length - index"></step>
+  <mat-list-item role="listitem" *ngFor="let step of steps; let index = index;"
+    [ngClass]="{'current': hoveringStep == index}">
+    <step [step]="step" [index]="steps.length - index"
+      (mouseenter)="onMouseEnterStep(index)" (mouseleave)="onMouseLeaveStep()"
+      (click)="onClickedStep(index)">
+    </step>
   </mat-list-item>
 </mat-list>

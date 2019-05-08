@@ -158,7 +158,6 @@ export class MapService {
     }
     let ls = lineString(line);
     let bz = bezier(ls, undefined);
-    console.log(bz);
     return bz;
   }
 }

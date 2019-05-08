@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Step } from './step';
 
 @Injectable({
@@ -745,15 +745,27 @@ export class StepService {
     },*/
   ];
 
+  private hoveringStep$: BehaviorSubject<number|null> = new BehaviorSubject(null);
+  private selectedStep$: BehaviorSubject<number|null> = new BehaviorSubject(null);
+
   getSteps(): Observable<Step[]> {
+    // TODO: use Http
     return of(this.TEST_STEPS);
   }
 
-  setHoveringStep(index: number) {
-
+  setHoveringStep(index: number|null) {
+    this.hoveringStep$.next(index);
   }
 
-  setSelectedStep(index: number) {
+  setSelectedStep(index: number|null) {
+    this.selectedStep$.next(index);
+  }
 
+  getHoveringStep(): Observable<number|null> {
+    return this.hoveringStep$.asObservable();
+  }
+
+  getSelectedStep(): Observable<number|null> {
+    return this.selectedStep$.asObservable();
   }
 }

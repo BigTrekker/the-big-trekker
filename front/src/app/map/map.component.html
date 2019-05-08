@@ -4,6 +4,13 @@
            [zoom]="zoom"
            [fitBounds]="true"
   >
-    <agm-marker *ngFor="let step of steps" [latitude]="step.latitude" [longitude]="step.longitude" [agmFitBounds]="true"></agm-marker>
+    <agm-marker *ngFor="let step of steps; let index = index"
+      [latitude]="step.latitude" [longitude]="step.longitude"
+      [agmFitBounds]="true"
+      [iconUrl]="hoveringStep == index? 'assets/marker_48px_current.png': 'assets/marker_48px.png'"
+      (mouseOver)="onMouseOverMarker(index)"
+      (mouseOut)="onMouseOutMarker()"
+      (markerClick)="onMarkerClicked(index)">
+    </agm-marker>
     <agm-data-layer [geoJson]="geojson" [style]="geojsonStyle"></agm-data-layer>
 </agm-map>
