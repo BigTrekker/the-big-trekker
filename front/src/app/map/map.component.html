@@ -2,7 +2,8 @@
            [latitude]="center.lat"
            [longitude]="center.lng"
            [zoom]="zoom"
+           [fitBounds]="true"
   >
-    <agm-marker *ngFor="let step of steps" [latitude]="step.latitude" [longitude]="step.longitude"></agm-marker>
+    <agm-marker *ngFor="let step of steps" [latitude]="step.latitude" [longitude]="step.longitude" [agmFitBounds]="true"></agm-marker>
     <agm-data-layer [geoJson]="geojson" [style]="geojsonStyle"></agm-data-layer>
 </agm-map>

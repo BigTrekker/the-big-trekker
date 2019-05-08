@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Step } from '../step/step';
 import { MapService } from './map.service';
 
-import { Data }from '@agm/core';
-
 @Component({
   selector: 'map',
   templateUrl: './map.component.html',
