@@ -1,0 +1,26 @@
+<div class="content">
+  <div class="detail-container-back">
+      <button mat-mini-fab (click)="exitDetails()">
+          <mat-icon>arrow_back</mat-icon>
+      </button>
+  </div>
+  <div class="item-header">
+      <div class="item-date">{{ step.date | date: 'dd/MM/yyyy' }}</div>
+        <div class="step-icon step-icon-author"
+          matBadge="{{ index }}" matBadgeColor="accent"
+          [style.background-color]="colorService.getRandomUniqueColor(step.authorName)"
+          matTooltip="{{ step.authorName }}">
+          {{ step.authorName | slice:0:1 }}
+        </div>
+  </div>
+  <div class="item-message">
+      <div class="item-sub-header">MESSAGE</div>
+      {{ step.message }}
+  </div>
+  <div class="item-photos">
+      <div class="item-sub-header">PHOTOS</div>
+      <div>
+          <img class="photo" *ngFor="let image of step.pictures" [src]="image"/>
+      </div>
+  </div>
+</div>

@@ -28,6 +28,7 @@ export class StepService {
         authorName: "Tom Jones",
         date: new Date(2019, 0, 8),
         message: "Hello, this is a sample third comment",
+        pictures: ["https://thumbs.dreamstime.com/z/tv-test-image-card-rainbow-multi-color-bars-geometric-signals-retro-hardware-s-minimal-pop-art-print-suitable-89603635.jpg"]
     }/*,
     {
         latitude: 45.7503391,

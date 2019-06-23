@@ -1,15 +1,19 @@
-step-list, map {
+step-list, step-details, map {
     top: 56px;
     bottom: 0;
 }
 
-step-list {
+step-list, step-details {
     z-index: 2;
     position: absolute;
     left: 0;
     overflow-y: scroll;
     -webkit-box-shadow: 2px 0 10px -2px #888;
     box-shadow: 2px 0 10px -2px #888;
+}
+
+step-details {
+    background-color: white;
 }
 
 map {
@@ -22,7 +26,7 @@ map {
 
 @media screen and (min-width: 599px) {
 
-    step-list {
+    step-list, step-details {
         width: 260px;
     }
 
@@ -32,11 +36,11 @@ map {
 }
 
 @media screen and (min-width: 1024px) {
-    step-list, map {
+    step-list, step-details, map {
         top: 64px;
     }
 
-    step-list {
+    step-list, step-details {
         width: 340px;
     }
 

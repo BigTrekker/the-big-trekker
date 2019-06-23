@@ -7,6 +7,7 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { NavBarComponent } from './navbar/navbar.component';
 import { StepComponent } from './step/step.component';
 import { StepListComponent } from './step-list/step-list.component';
+import { StepDetailsComponent } from './step-details/step-details.component';
 import { MapComponent } from './map/map.component';
 
 import { AgmCoreModule } from '@agm/core';
@@ -17,7 +18,8 @@ import { AgmCoreModule } from '@agm/core';
     NavBarComponent,
     StepComponent,
     StepListComponent,
-    MapComponent
+    StepDetailsComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,

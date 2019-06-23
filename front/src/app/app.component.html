@@ -1,5 +1,6 @@
 <header>
   <navbar class="mat-elevation-z6"></navbar>
 </header>
-<step-list [steps]="steps"></step-list>
+<step-list [steps]="steps" *ngIf="!selectedStep" [@stepListAnimation]></step-list>
+<step-details *ngIf="selectedStep" [step]="selectedStep" [@stepDetailsAnimation]></step-details>
 <map [steps]="steps"></map>
