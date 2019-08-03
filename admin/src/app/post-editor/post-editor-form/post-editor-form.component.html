@@ -1,4 +1,4 @@
-<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="mat-elevation-z2">
   <h1 class="mat-display-1">Raconte-nous !</h1>
 
   <mat-form-field>
@@ -18,7 +18,10 @@
 
   <div id="photos-panel">
 
-    <button mat-raised-button (click)="photosInput.click();$event.preventDefault()" class="sub-form-element">
+    <button mat-raised-button
+            type="button"
+            (click)="photosInput.click()"
+            class="sub-form-element">
       <mat-icon>photo_camera</mat-icon>
         Ajoute des photos !
     </button>
@@ -32,6 +35,24 @@
          *ngIf="postForm.controls['photos'].value && postForm.controls['photos'].value.length > 0">
       <div>
         <div *ngFor="let photo of postForm.controls['photos'].value" class="photo-container">
+          <div class="photo-controls" *ngIf="photo.photoDate != null || photo.photoCoord != null">
+            <button mat-icon-button
+                    *ngIf="photo.photoDate != null"
+                    (click)="useDateFromPhoto(photo)"
+                    type="button"
+                    class="mat-elevation-z1"
+                    aria-label="Utiliser la date de cette photo">
+              <mat-icon>event</mat-icon>
+            </button>
+            <button mat-icon-button
+                    type="button"
+                    *ngIf="photo.photoCoord != null"
+                    (click)="locateFromPhoto(photo)"
+                    class="mat-elevation-z1"
+                    aria-label="Utiliser la localisation de cette photo">
+              <mat-icon>gps_not_fixed</mat-icon>
+            </button>
+          </div>
           <img class="photo-thumbnail" [src]="photo.fileAsDataUrl" />
         </div>
       </div>
@@ -39,16 +60,18 @@
   </div>
 
   <div>
-    <div id="locate-me" class="sub-form-element">
-      <button mat-raised-button (click)="locateUser();$event.preventDefault()">
-        <mat-icon>gps_not_fixed</mat-icon>
-        Localise toi !
-      </button>
-    </div>
     <p class="mat-body">
       La localisation est lue depuis tes photos si ton GPS était activé à ce moment là.<br>
       Sinon tu peux te localiser ou cliquer sur la carte.
     </p>
+    <div id="locate-me" class="sub-form-element">
+      <button mat-raised-button
+              type="button"
+              (click)="locateUser()">
+        <mat-icon>gps_not_fixed</mat-icon>
+        Localise toi via ton navigateur
+      </button>
+    </div>
     <agm-map #AgmMap class="sub-form-element"
              (mapClick)="mapClicked($event)"
              [latitude]="mapParams.center.lat"

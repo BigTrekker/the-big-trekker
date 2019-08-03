@@ -31,7 +31,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   checkLogin(url: string): boolean {
-    console.log('allo');
     if (this.authService.getUser()) { return true; }
 
     this.authService.redirectUrl = url;

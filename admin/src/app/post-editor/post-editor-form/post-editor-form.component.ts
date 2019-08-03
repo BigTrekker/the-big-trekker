@@ -9,9 +9,8 @@ import { PostService } from './../../services/post.service';
 import { IconSnackbarComponent } from './../../icon-snackbar/icon-snackbar.component';
 
 enum DATE_AND_COORD_DEFINED_BY {
-  DEFAULT = 1,
-  PHOTO = 2,
-  USER = 3,
+  AUTO = 1,
+  MANUAL = 2
 }
 
 @Component({
@@ -35,8 +34,8 @@ export class PostEditorFormComponent {
     zoom: 10
   }
 
-  dateDefinedBy: DATE_AND_COORD_DEFINED_BY = DATE_AND_COORD_DEFINED_BY.DEFAULT;
-  coordDefinedBy: DATE_AND_COORD_DEFINED_BY = DATE_AND_COORD_DEFINED_BY.DEFAULT;
+  dateDefinedBy: DATE_AND_COORD_DEFINED_BY = DATE_AND_COORD_DEFINED_BY.AUTO;
+  coordDefinedBy: DATE_AND_COORD_DEFINED_BY = DATE_AND_COORD_DEFINED_BY.AUTO;
 
   constructor(private exifService: ExifService,
     private postService: PostService,
@@ -65,7 +64,7 @@ export class PostEditorFormComponent {
   }
   
   dateChangedFromInput() {
-    this.dateDefinedBy = DATE_AND_COORD_DEFINED_BY.USER;
+    this.dateDefinedBy = DATE_AND_COORD_DEFINED_BY.MANUAL;
   }
 
   locateUser() {
@@ -74,13 +73,13 @@ export class PostEditorFormComponent {
       this.updateLocationIfAuthorized({
         lat: position['coords']['latitude'],
         lng: position['coords']['longitude']
-      }, DATE_AND_COORD_DEFINED_BY.USER);
+      }, DATE_AND_COORD_DEFINED_BY.MANUAL);
      });
   }
 
   mapClicked(event) {
     console.debug("Map has been clicked, trying to update marker position");
-    this.updateLocationIfAuthorized(event.coords, DATE_AND_COORD_DEFINED_BY.USER);
+    this.updateLocationIfAuthorized(event.coords, DATE_AND_COORD_DEFINED_BY.MANUAL);
   }
 
   onFileChanged(event) {
@@ -93,7 +92,7 @@ export class PostEditorFormComponent {
         reader.onload = e => { // called once readAsDataURL is completed
           let photosArray = this.postForm.controls['photos'].value;
           this.exifService.getData(file, (photoDate, photoCoord) => {
-            photosArray.push({
+            photosArray.unshift({
               fileObject: file,
               photoDate: photoDate,
               photoCoord: photoCoord,
@@ -101,11 +100,11 @@ export class PostEditorFormComponent {
             });
             if(!readFromPhoto) {
               if(photoDate != null) {
-                this.updateDateIfAuthorized(photoDate, DATE_AND_COORD_DEFINED_BY.PHOTO);
+                this.updateDateIfAuthorized(photoDate, DATE_AND_COORD_DEFINED_BY.AUTO);
                 readFromPhoto = true;
               }
               if(photoCoord != null) {
-                this.updateLocationIfAuthorized(photoCoord, DATE_AND_COORD_DEFINED_BY.PHOTO);
+                this.updateLocationIfAuthorized(photoCoord, DATE_AND_COORD_DEFINED_BY.AUTO);
                 readFromPhoto = true;
               }
             }
@@ -113,6 +112,14 @@ export class PostEditorFormComponent {
         }
       }
     }
+  }
+
+  locateFromPhoto(photo) {
+    this.updateLocationIfAuthorized(photo.photoCoord, DATE_AND_COORD_DEFINED_BY.MANUAL);
+  }
+
+  useDateFromPhoto(photo) {
+    this.updateDateIfAuthorized(photo.photoDate, DATE_AND_COORD_DEFINED_BY.MANUAL);
   }
 
   onSubmit() {
